@@ -49,11 +49,11 @@ async function main() {
   const escrow = await hre.ethers.getContractAt("TaskEscrow", dep.escrow, wallet);
 
   // 0) 注册 + 质押（若已在册则跳过）
-  await logStep("1) 注册 Agent + 质押 1 BOT");
+  await logStep("1) 注册 Agent + 质押 0.1 BOT");
   const already = await registry.isActive(me);
   if (!already) {
     const tx1 = await registry.register("ipfs://wuhan-agent-escrow/agent/demo", {
-      value: hre.ethers.parseEther("1"),
+      value: hre.ethers.parseEther("0.1"),
     });
     await tx1.wait();
     console.log("   tx:", link(tx1.hash));
@@ -64,9 +64,9 @@ async function main() {
   console.log("   质押:", hre.ethers.formatEther(a0.stake), "BOT | 好评:", a0.goodCount, "差评:", a0.badCount, "| 信誉分:", (await registry.score(me)).toString());
 
   // 1) 发任务托管 0.5 BOT
-  await logStep("2) 创建赏金任务（托管 0.5 BOT）");
+  await logStep("2) 创建赏金任务（托管 0.05 BOT）");
   const tx2 = await escrow.createTask("ipfs://wuhan-agent-escrow/task/1", {
-    value: hre.ethers.parseEther("0.5"),
+    value: hre.ethers.parseEther("0.05"),
   });
   await tx2.wait();
   console.log("   tx:", link(tx2.hash));
@@ -87,7 +87,7 @@ async function main() {
   console.log("   tx:", link(tx4.hash));
 
   // 4) 验收 → 放款 + 好评
-  await logStep("5) 发布者验收 accept → 放款 0.5 BOT + 记好评");
+  await logStep("5) 发布者验收 accept → 放款 0.05 BOT + 记好评");
   const tx5 = await escrow.accept(taskId);
   await tx5.wait();
   console.log("   tx:", link(tx5.hash));
@@ -97,7 +97,7 @@ async function main() {
   // 5) 第二条任务走 拒收 → 争议 → 退款 + 罚没
   await logStep("6) 第二条任务：建任务 → 接单 → 提交 → 拒收");
   const txb = await escrow.createTask("ipfs://wuhan-agent-escrow/task/2", {
-    value: hre.ethers.parseEther("0.3"),
+    value: hre.ethers.parseEther("0.03"),
   });
   await txb.wait();
   const taskId2 = (await escrow.taskCount()).toString();
@@ -109,8 +109,8 @@ async function main() {
   await txr.wait();
   console.log("   reject tx:", link(txr.hash), "→ 进入争议");
 
-  await logStep("7) 仲裁人裁决：退款发布者 + 差评 + 罚没 0.2 BOT 质押");
-  const txz = await escrow.resolveRefund(taskId2, hre.ethers.parseEther("0.2"));
+  await logStep("7) 仲裁人裁决：退款发布者 + 差评 + 罚没 0.02 BOT 质押");
+  const txz = await escrow.resolveRefund(taskId2, hre.ethers.parseEther("0.02"));
   await txz.wait();
   console.log("   tx:", link(txz.hash));
   const a2 = await registry.agents(me);

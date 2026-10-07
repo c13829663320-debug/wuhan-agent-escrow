@@ -30,8 +30,8 @@ async function main() {
   console.log(" 浏览器     :", explorer);
   console.log("");
 
-  // 1) 部署 AgentRegistry，最低质押 1 BOT
-  const MIN_STAKE = hre.ethers.parseEther("1");
+  // 1) 部署 AgentRegistry，最低质押 0.1 BOT（mainnet-small 小额演示）
+  const MIN_STAKE = hre.ethers.parseEther("0.1");
   const Registry = await hre.ethers.getContractFactory("AgentRegistry");
   const registry = await Registry.deploy(MIN_STAKE);
   await registry.waitForDeployment();
