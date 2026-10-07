@@ -1,0 +1,10 @@
+{
+  "network": "bohr",
+  "chainId": 968,
+  "explorer": "https://scan.bohr.life",
+  "registry": "0x77943E65148F50302E58F23B274a100A206934eC",
+  "escrow": "0xB2607D3E44d8597929A31eB46b12F8e9579B9fC7",
+  "minStake": "1000000000000000000",
+  "deployedAt": "2026-10-07T08:44:58.014Z",
+  "deployer": "0x57C29D4e1d5bc5a77B0C25F049D0D7F15A9288Fd"
+}

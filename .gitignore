@@ -18,6 +18,7 @@ typechain-types/
 # 日志 / 系统
 *.log
 .DS_Store
+.~lock.*
 
 # 部署记录（含地址，本地保留；如要公开可自行提交）
 # deployments/
