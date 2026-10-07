@@ -1,0 +1,10 @@
+{
+  "network": "botchain",
+  "chainId": 677,
+  "explorer": "https://scan.botchain.ai",
+  "registry": "0x472a77B7D54A3C1ADbc40144dC95e7B09E8c7023",
+  "escrow": "0xe5C5C60fe431Dd55DBA814e868D8E0C0c8e18588",
+  "minStake": "100000000000000000",
+  "deployedAt": "2026-10-07T14:43:35.774Z",
+  "deployer": "0x57C29D4e1d5bc5a77B0C25F049D0D7F15A9288Fd"
+}
