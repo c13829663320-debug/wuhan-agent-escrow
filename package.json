@@ -1,0 +1,22 @@
+{
+  "name": "wuhan-agent-escrow",
+  "version": "1.0.0",
+  "description": "江城信约 AgentEscrow: on-chain reputation + task escrow for AI Agents on BOT Chain",
+  "license": "MIT",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "demo:local": "hardhat run scripts/local-demo.js --network localhost",
+    "deploy:botchain": "hardhat run scripts/deploy.js --network botchain"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.17"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0"
+  }
+}

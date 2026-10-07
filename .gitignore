@@ -1,0 +1,23 @@
+# 依赖
+node_modules/
+frontend/node_modules/
+
+# 环境变量（含私钥，绝不提交）
+.env
+.env.local
+frontend/.env
+frontend/.env.local
+
+# 构建产物
+dist/
+frontend/dist/
+artifacts/
+cache/
+typechain-types/
+
+# 日志 / 系统
+*.log
+.DS_Store
+
+# 部署记录（含地址，本地保留；如要公开可自行提交）
+# deployments/
