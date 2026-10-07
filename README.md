@@ -134,6 +134,47 @@ npx hardhat run scripts/demo.js   --network botchain
 
 详见 [`DEPLOY.md`](./DEPLOY.md)。
 
+## ✅ 主网部署成果（chainId 677，已核验）
+
+**在线 dApp（GitHub Pages）**：<https://c13829663320-debug.github.io/wuhan-agent-escrow/>
+
+两套合约均已在 Blockscout 完成**源码验证**（`#code` 可见 Solidity 源码、ABI 与构造参数）。
+
+### 合约地址
+
+| 版本 / 分支 | 最低质押 | AgentRegistry | TaskEscrow |
+|---|---|---|---|
+| 完整业务闭环 `mainnet-small` | **0.1 BOT** | [`0x472a…7023`](https://scan.botchain.ai/address/0x472a77B7D54A3C1ADbc40144dC95e7B09E8c7023#code) | [`0xe5C5…8588`](https://scan.botchain.ai/address/0xe5C5C60fe431Dd55DBA814e868D8E0C0c8e18588#code) |
+| 标准金额 `master` | **1 BOT** | [`0x7794…34eC`](https://scan.botchain.ai/address/0x77943E65148F50302E58F23B274a100A206934eC#code) | [`0xB260…9fC7`](https://scan.botchain.ai/address/0xB2607D3E44d8597929A31eB46b12F8e9579B9fC7#code) |
+
+### 链上交易证据（共 13 笔，全部 `status=1`，独立 RPC 回查）
+
+- **部署 3 笔**：Registry 部署、Escrow 部署、`setEscrow` 双向绑定。
+- **业务闭环 10 笔**：注册质押 0.1 → 任务1 托管 0.05 → 接单 → 提交交付 → 验收放款 + 好评；任务2 托管 0.03 → 接单 → 提交 → 拒收进入争议 → 仲裁退款 + 差评 + **罚没 0.02**。
+- 部署记录（含地址与时间）：[`deployments/botchain-small.json`](./deployments/botchain-small.json)、[`deployments/botchain-standard.json`](./deployments/botchain-standard.json)。
+
+### 链上最终状态
+
+- Agent：`active`，质押 **0.08 BOT**（0.1 − 罚没 0.02），好评 1 / 差评 1 / 罚没 1。
+- 任务：`#1 Accepted`（已放款）、`#2 ResolvedRefunded`（已退款），`taskCount = 2`。
+
+### 复现与源码验证命令
+
+```bash
+# 1) 部署（自动写 deployments/botchain.json）
+npx hardhat run scripts/deploy.js --network botchain
+
+# 2) 验证源码（hardhat.config.js 已配置 Blockscout customChains，占位 API key 即可）
+npx hardhat verify --network botchain <RegistryAddress> <minStakeWei>
+npx hardhat verify --network botchain <EscrowAddress>  <RegistryAddress>
+
+# 3) 完整小额业务演示（mainnet-small 分支）
+npx hardhat run scripts/demo.js    --network botchain
+npx hardhat run scripts/balance.js --network botchain   # 余额自检，仅 mainnet-small 分支提供
+```
+
+> 说明：标准分支 `master` 最低质押 1 BOT，适合最小部署；钱包余额有限时，完整业务闭环请使用 `mainnet-small`（最低质押 0.1 BOT）。
+
 ## 安全
 
 - **绝不**在仓库硬编码私钥；`PRIVATE_KEY` 仅从 `.env` / 环境变量读取，`.env` 已被 `.gitignore` 排除。

@@ -20,5 +20,6 @@ typechain-types/
 .DS_Store
 .~lock.*
 
-# 部署记录（含地址，本地保留；如要公开可自行提交）
-# deployments/
+# 部署记录：规范记录 botchain-small.json / botchain-standard.json 纳入版本管理；
+# deploy.js 动态生成的“最新一次”通用文件仅本地保留，不提交
+deployments/botchain.json

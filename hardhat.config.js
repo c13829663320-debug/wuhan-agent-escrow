@@ -52,6 +52,20 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: process.env.BOTCHAIN_ETHERSCAN_API_KEY || "",
+    apiKey: {
+      // Blockscout 不强制需要真实 API key，占位即可
+      botchain: process.env.BOTCHAIN_ETHERSCAN_API_KEY || "botchain-no-key-required",
+    },
+    customChains: [
+      {
+        network: "botchain",
+        chainId: 677,
+        urls: {
+          // Blockscout（Etherscan 兼容 v1 风格，注意末尾的 ?）
+          apiURL: "https://scan.botchain.ai/api?",
+          browserURL: "https://scan.botchain.ai",
+        },
+      },
+    ],
   },
 };
